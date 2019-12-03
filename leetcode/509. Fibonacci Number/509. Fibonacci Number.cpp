@@ -20,7 +20,6 @@ public:
             }
         }
         return dp[N];
-        
     }
 };
 
