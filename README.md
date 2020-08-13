@@ -22,7 +22,15 @@ coding_practice
 ## Pattern: Merge k sorted lists:
   * https://www.educative.io/courses/grokking-the-coding-interview/Y5n0n3vAgYK
     * 23. Merge k Sorted Lists: 
-      * leetcode: https://leetcode.com/problems/merge-k-sorted-lists/
+      * leetcode 23. : https://leetcode.com/problems/merge-k-sorted-lists/
       * educative.io: https://www.educative.io/courses/grokking-the-coding-interview/Y5n0n3vAgYK
+
+    * 378. Kth Smallest Element in a Sorted Matrix
+      * leetcode 378. : https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/submissions/
+    * https://stackoverflow.com/questions/8753345/finding-kth-smallest-number-from-n-sorted-arrays
+
+## Pattern: DP: 0-1 Knapsack (0-1背包問題) 
+  * 
+
 
 
