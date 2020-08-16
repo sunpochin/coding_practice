@@ -32,5 +32,10 @@ coding_practice
 ## Pattern: DP: 0-1 Knapsack (0-1背包問題) 
   * 
 
+## Pattern: Palindromic Subsequence
+  * 516. Longest Palindromic Subsequence
+    * https://leetcode.com/problems/longest-palindromic-subsequence/
+    * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
+
 
 
