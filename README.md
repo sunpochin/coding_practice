@@ -29,13 +29,27 @@ coding_practice
       * leetcode 378. : https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/submissions/
     * https://stackoverflow.com/questions/8753345/finding-kth-smallest-number-from-n-sorted-arrays
 
-## Pattern: DP: 0-1 Knapsack (0-1背包問題) 
-
 ## Pattern: Palindromic Subsequence
   * 516. Longest Palindromic Subsequence
     * https://leetcode.com/problems/longest-palindromic-subsequence/
     * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
 
 
+# Dynamic Programming
+  * Tag: https://leetcode.com/tag/dynamic-programming/
+  * Approach: https://leetcode.com/problems/house-robber/discuss/156523/From-good-to-great.-How-to-approach-most-of-DP-problems.
 
+
+## DP Pattern: DP: 0-1 Knapsack (0-1背包問題) 
+  * 474. Ones and Zeroes: https://leetcode.com/problems/ones-and-zeroes/
+
+## DP Pattern: Unbounded Knapsack
+  * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/gx763A3x9Pl
+  * 
+
+## DP Pattern 3: Fibonacci Numbers
+### House Thief: 
+    * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2EOxJ0Nkp3
+    * House Robber: https://leetcode.com/problems/house-robber/ 
+    * House Robber 2: https://leetcode.com/problems/house-robber-ii/discuss/59921/9-lines-0ms-O(1)-Space-C%2B%2B-solution
 
