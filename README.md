@@ -53,3 +53,7 @@ coding_practice
     * House Robber: https://leetcode.com/problems/house-robber/ 
     * House Robber 2: https://leetcode.com/problems/house-robber-ii/discuss/59921/9-lines-0ms-O(1)-Space-C%2B%2B-solution
 
+
+
+* https://leetcode.com/problems/partition-equal-subset-sum/discuss/90592/01-knapsack-detailed-explanation
+
