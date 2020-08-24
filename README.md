@@ -49,11 +49,13 @@ coding_practice
 
 ## DP Pattern 3: Fibonacci Numbers
 ### House Thief: 
-    * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2EOxJ0Nkp3
-    * House Robber: https://leetcode.com/problems/house-robber/ 
-    * House Robber 2: https://leetcode.com/problems/house-robber-ii/discuss/59921/9-lines-0ms-O(1)-Space-C%2B%2B-solution
+  * https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2EOxJ0Nkp3
+  * House Robber: https://leetcode.com/problems/house-robber/ 
+  * House Robber 2: https://leetcode.com/problems/house-robber-ii/discuss/59921/9-lines-0ms-O(1)-Space-C%2B%2B-solution
+
+    * https://leetcode.com/problems/partition-equal-subset-sum/discuss/90592/01-knapsack-detailed-explanation
 
 
 
-* https://leetcode.com/problems/partition-equal-subset-sum/discuss/90592/01-knapsack-detailed-explanation
-
+## DP Pattern 3: Palindromic Subsequence
+  * Longest Palindromic Subsequence:  https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
