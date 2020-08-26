@@ -59,3 +59,6 @@ coding_practice
 
 ## DP Pattern 3: Palindromic Subsequence
   * Longest Palindromic Subsequence:  https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
+    * https://leetcode.com/problems/longest-palindromic-subsequence/submissions/
+  * Longest Palindromic Substring: https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2yRjwxBY7A
+
