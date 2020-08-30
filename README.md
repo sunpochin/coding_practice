@@ -60,7 +60,7 @@ coding_practice
 ## DP Pattern 3: Palindromic Subsequence
   * 516. Longest Palindromic Subsequence:  https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
     * https://leetcode.com/problems/longest-palindromic-subsequence/submissions/
-  * Longest Palindromic Substring: https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2yRjwxBY7A
+  * 5. Longest Palindromic Substring: https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2yRjwxBY7A
   <pre>
     此题还可以用动态规划 Dynamic Programming 来解，根 Palindrome Partitioning II 的解法很类似，我们维护一个二维数组 dp，其中 dp[i][j] 表示字符串区间 [i, j] 是否为回文串，当 i = j 时，只有一个字符，肯定是回文串，如果 i = j + 1，说明是相邻字符，此时需要判断 s[i] 是否等于 s[j]，如果i和j不相邻，即 i - j >= 2 时，除了判断 s[i] 和 s[j] 相等之外，dp[i + 1][j - 1] 若为真，就是回文串，通过以上分析，可以写出递推式如下：
 dp[i, j] = 1, if i == j
@@ -69,6 +69,10 @@ dp[i, j] = s[i] == s[j]
 dp[i, j] = s[i] == s[j] && dp[i + 1][j - 1]    if j > i + 1      
   </pre>
 
+  * 647. Count of Palindromic Substrings
+  
 
+
+## DP Pattern 4: Palindromic Subsequence
 
 
