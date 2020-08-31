@@ -70,7 +70,7 @@ dp[i, j] = s[i] == s[j] && dp[i + 1][j - 1]    if j > i + 1
   </pre>
 
   * 647. Count of Palindromic Substrings
-  
+    
 
 
 ## DP Pattern 4: Palindromic Subsequence
