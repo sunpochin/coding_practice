@@ -57,7 +57,7 @@ coding_practice
 
 
 
-## DP Pattern 3: Palindromic Subsequence
+## DP Pattern : Palindromic Subsequence
   * 516. Longest Palindromic Subsequence:  https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/RMk1D1DY1PL
     * https://leetcode.com/problems/longest-palindromic-subsequence/submissions/
   * 5. Longest Palindromic Substring: https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/m2yRjwxBY7A
@@ -70,9 +70,8 @@ dp[i, j] = s[i] == s[j] && dp[i + 1][j - 1]    if j > i + 1
   </pre>
 
   * 647. Count of Palindromic Substrings
-    
+  * Minimum Deletions in a String to make it a Palindrome: https://www.educative.io/courses/grokking-dynamic-programming-patterns-for-coding-interviews/gkX4prBkRLj
+    * 1312. Minimum Insertion Steps to Make a String Palindrome: https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
 
-
-## DP Pattern 4: Palindromic Subsequence
 
 
