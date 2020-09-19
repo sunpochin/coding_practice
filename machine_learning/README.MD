@@ -1,5 +1,9 @@
 
 # TensorFlow
+## Convnet
+  * Take away:
+    * 111
+    * 222
 ### Conv
 ### Parameter Counting
 
