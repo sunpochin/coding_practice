@@ -15,10 +15,14 @@ class twoSumTestCase(unittest.TestCase):
         sol = two_sum.Solution() 
         result = sol.twoSum(nums, target)
         print('result: ', result)
+        expected = [0, 1]
+        self.assertEqual(expected, result)
+        
+
 
 
 suite = (unittest.TestLoader()
-                 .loadTestsFromTestCase(twoSumTestCase))
+    .loadTestsFromTestCase(twoSumTestCase))
 unittest.TextTestRunner(verbosity=2).run(suite)
 
 
