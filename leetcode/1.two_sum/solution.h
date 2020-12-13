@@ -28,7 +28,6 @@ public:
             theMap[nums[iter]] = iter;
                 ni = theMap[nums[iter]];
                 std::cout << "ni : " << ni << ", nums[iter] " << nums[iter] << std::endl;
-            
         }
         
         vector<int> vecsolu;
