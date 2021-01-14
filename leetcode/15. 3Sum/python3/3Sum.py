@@ -16,12 +16,12 @@ class Solution:
             length += 1
         print('length: ', length)
         
-        first = head
-        for ni in range(length - n - 1):
+        first = dummy
+        for ni in range(length - n):
             first = first.next
         print('first: ', first)
-        if (first.next != None):
-            first.next = first.next.next
+#        if (first.next != None):
+        first.next = first.next.next
         
         return dummy.next
             
