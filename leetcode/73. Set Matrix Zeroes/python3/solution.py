@@ -23,3 +23,5 @@ class Solution:
                     matrix[ni][nj] = 0
                     
             
+
+
