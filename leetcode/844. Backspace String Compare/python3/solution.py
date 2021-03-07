@@ -1,37 +1,33 @@
 class Solution:
     def backspaceCompare(self, S: str, T: str) -> bool:
-        stackS = []
-        stackT = []
-        # print('stackS: ', stackS)
-        # print('stackT: ', stackT)
-
-        for s in S:
-#            print('s: ', s)
-            if '#' == s:
-                if len(stackS) > 0:
-                    stackS.pop()
+        ptrS, ptrT = len(S) - 1, len(T) - 1
+        while(ptrS >= 0 or ptrT >= 0):
+            if ('#' == S[ptrS] or '#' == T[ptrT]):
+                if '#' == T[ptrT]:
+                    backT = 2
+                    while(backT > 0):
+                        print('ptrT: ', ptrT, ', backT: ', backT)
+                        ptrT -= 1
+                        backT -= 1
+                        if '#' == T[ptrT]:
+                            backT += 2
+                            
+                if '#' == S[ptrS]:
+                    backs = 2
+                    while(backs > 0):
+                        ptrS -= 1
+                        backs -= 1
+                        print('ptrS: ', ptrS, ', backs: ', backs)
+                        if '#' == S[ptrS]:
+                            backs += 2
             else:
-                stackS.append(s)
-#            print('stackS: ', stackS)
-#        print('stackS: ', stackS)
+                # both char are NOT '#', don't need to process, both --
+                print('S[ptrS]: ', S[ptrS], ', T[ptrT]: ', T[ptrT])
+                if S[ptrS] != T[ptrT]:
+                    return False
+                else:
+                    ptrS -= 1
+                    ptrT -= 1
         
-        for t in T:
-#            print('t: ', t)
-            if '#' == t:
-                if len(stackT) > 0:
-                    stackT.pop()
-            else:
-                stackT.append(t)
-#            print('stackT: ', stackT)
-#        print('stackT: ', stackT)
-        return self.CompareStr(stackS, stackT)
-    
-    def CompareStr(self, stackS: list, stackT: list) -> bool:
-        if len(stackS) != len(stackT):
-            return False
-        for it in range(len(stackS)):
-#            print('stackS[it]: ', stackS[it])
-            if stackS[it] != stackT[it]:
-                return False
-        # else
-        return True     
+        # passed all char comparison without returning False, return True
+        return True
