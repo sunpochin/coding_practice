@@ -5,6 +5,10 @@
 # https://leetcode.com/problems/split-array-into-consecutive-subsequences/discuss/106514/C%2B%2BPython-Esay-Understand-Solution
 # https://leetcode.com/problems/split-array-into-consecutive-subsequences/discuss/311938/Just-visual-description-(had-a-lot-of-English-trouble-from-solution-descriptions)
 
+# Complexity
+# Time O(N) for every nums visited once.
+# Space O(N) ( O(2N) ) for left and end to store.
+
 class Solution:
     def isPossible(self, A):
         left = collections.Counter(A)
@@ -17,22 +21,22 @@ class Solution:
             print('i: ', i, ', left[i] -= 1: ', left[i])
             # adding to a existing subsequence length >= 3 ends at i-1
             if end[i - 1] > 0:
-                print('end: ', end)
+                # print('end: ', end)
                 end[i - 1] -= 1
                 end[i] += 1
-                print('after end: ', end)
+                # print('after end: ', end)
             # "existing subsequence length >= 3 ends at i-1" doesn't exist, start a new subsequence of 3, 
             # by left[i+1] -= 1 
             # left[i+2] -= 1
             # end[i + 2] += 1
             elif left[i + 1] and left[i + 2]:
-                print('left: ', left)
+                # print('left: ', left)
                 left[i + 1] -= 1
                 left[i + 2] -= 1
                 end[i + 2] += 1
-                print('after left: ', left, ', end: ', end)
+                # print('after left: ', left, ', end: ', end)
             else:
-                print('False: left: ', left, ', end: ', end, '\n')
+                # print('False: left: ', left, ', end: ', end, '\n')
                 return False
         print('\n')
         return True

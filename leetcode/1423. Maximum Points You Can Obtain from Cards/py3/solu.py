@@ -19,11 +19,3 @@
 # 4. return sum.
 class Solution:
     def maxScore(self, cardPoints: List[int], k: int) -> int:
-        sum = 0
-        leng = len(cardPoints)
-        for it in range(k):
-        if cardPoints[0] > cardPoints[leng - 1]:
-        elif cardPoints[0] == cardPoints[leng - 1]:
-        elif cardPoints[0] < cardPoints[leng - 1]
-
-
