@@ -28,3 +28,10 @@
 
 * Dynamic programming:
     * There is 
+    * Given a string s containing only digits, return the number of ways to decode it.
+    * It displays the two, necessary characteristics of a dynamic programming problem:
+    * Optimal substructure:
+        https://leetcode.com/problems/palindromic-substrings/solution/
+
+    * Palindrome:
+        https://leetcode.com/problems/palindromic-substrings/solution/
