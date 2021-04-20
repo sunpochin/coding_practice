@@ -11,6 +11,9 @@
         * Hash Tables
 
 * Algorithms
+    * Sorting
+    * Dynamic Programming
+    * BFS + DFS traversal
+    * Recursion
 
-(
-)
+
