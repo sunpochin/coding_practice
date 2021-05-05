@@ -1,11 +1,13 @@
-from fastapi import FastAPI, Body, Header, File
+from fastapi import FastAPI, Body, Header, File, Depends
 from models.author import Author
 from models.book import Book
 from models.user import User
 from starlette.status import HTTP_201_CREATED
 from starlette.responses import Response
 
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 app_v1 = FastAPI(openapi_prefix="/v1")
+oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
 
 @app_v1.get("/hello")
 async def hello_world():
@@ -51,9 +53,16 @@ async def patch_author_name(name: str = Body(..., embed=True) ):
 async def post_user_and_author(user: User, author: Author, bookstore_name: str = Body(..., embed=True) ):
     return {"user": user, "author": author, "bookstore_name": bookstore_name}
 
+# multi-form request
 @app_v1.post("/user/photo")
 async def upload_user_photo(response: Response, profile_photo: bytes = File(...)):
     response.headers["x-file-size"] = str(len(profile_photo) )
     response.set_cookie(key="cookie-api", value="test")
     return {"file size": len(profile_photo) }
+
+@app_v1.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends() )
+    pass
+    form_data.username
+    form_data.password
 
