@@ -3,13 +3,12 @@ from models.jwt_user import JWTUser
 from datetime import datetime, timedelta
 from utils.const import JWT_EXPIRATION_TIME_MINUTES, JWT_ALGORITHM, JWT_SECRET_KEY
 import jwt
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from starlette.status import HTTP_401_UNAUTHORIZED
+import time
 
 oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
-
-
 
 pwd_context = CryptContext(schemes=["bcrypt"])
 jwt_user_fake_db = [{}]
@@ -30,11 +29,13 @@ def verify_password(plain_password, hashed_password):
 
 
 # 1. Authenticate username and password to give JWT token
-def authenticate_user(user:JWTUser):
+def authenticate_user(user: JWTUser):
     if fake_jwt_user1.username == user.username:
         if verify_password(user.password, fake_jwt_user1.password):
-            True
-    return False
+            user.role = "admin"
+            return user
+            # return True
+    return None
 
 
 # 2. Create access JWT token
@@ -53,12 +54,17 @@ def check_jwt_token(token: str= Depends(oauth_schema) ):
         username = jwt_payload.get("sub")
         role = jwt_payload.get("role")
         expiration = jwt_payload.get("exp")
-        if datetime.utcnow() < expiration:
+        # if datetime.utcnow() < expiration:
+        if time.time() < expiration:
             if fake_jwt_user1.username == username:
                 return final_checks(username, role)
     except Exception as e:
-        return HTTP_401_UNAUTHORIZED
-    return HTTP_401_UNAUTHORIZED
+        return False
+        # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+    return False
+    # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+    #     return HTTP_401_UNAUTHORIZED
+    # return HTTP_401_UNAUTHORIZED
 
 # 4. Last checking and returning the final result
 def final_checks(username: str, role:str):
@@ -66,6 +72,7 @@ def final_checks(username: str, role:str):
         return True
     else:
         return False
+    # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
     pass
 
 # print(get_hashed_password("mysecret"))

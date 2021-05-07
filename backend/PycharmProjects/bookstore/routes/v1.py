@@ -1,11 +1,13 @@
-from fastapi import FastAPI, Body, Header, File, Depends
+from fastapi import FastAPI, Body, Header, File, Depends, HTTPException
 from models.author import Author
 from models.book import Book
 from models.user import User
-from starlette.status import HTTP_201_CREATED
+from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from starlette.responses import Response
-
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from utils.security import authenticate_user, create_jwt_token, check_jwt_token
+from models.jwt_user import JWTUser
+
 app_v1 = FastAPI(openapi_prefix="/v1")
 oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
 
@@ -14,7 +16,8 @@ async def hello_world():
     return {"Hello fastapi world!"}
 
 @app_v1.post("/user", status_code=HTTP_201_CREATED)
-async def post_user(user: User, x_custom: str = Header("default header") ):
+async def post_user(user: User, x_custom: str = Header("default header"),
+                    jwt: bool = Depends(check_jwt_token) ):
     return {"request USER:": user, "request custom header": x_custom}
 
 @app_v1.get("/user")
@@ -61,8 +64,13 @@ async def upload_user_photo(response: Response, profile_photo: bytes = File(...)
     return {"file size": len(profile_photo) }
 
 @app_v1.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends() )
-    pass
-    form_data.username
-    form_data.password
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends() ):
+    jwt_user_dict = {"username": form_data.username,
+                     "password": form_data.password}
+    jwt_user = JWTUser(**jwt_user_dict)
+    user = authenticate_user(jwt_user)
+    if None is user:
+        raise HTTPException(status_code= HTTP_401_UNAUTHORIZED)
+    jwt_token = create_jwt_token(user)
+    return {"token": jwt_token}
 
