@@ -68,5 +68,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     if None is user:
         raise HTTPException(status_code= HTTP_401_UNAUTHORIZED)
     jwt_token = create_jwt_token(user)
-    return {"token": jwt_token}
+    return {"access_token": jwt_token}
 

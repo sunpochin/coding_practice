@@ -17,7 +17,7 @@ async def middleware(request: Request, call_next):
     # if not str(request.url).__contains__("/token"):
     if not any(word in str(request.url) for word in ["/token", "/docs", "/openapi.json"]):
         try:
-            jwt_token = request.headers["Authori"].split("Bearer ")[1]
+            jwt_token = request.headers["Authorization"].split("Bearer ")[1]
             is_valid = check_jwt_token(jwt_token)
         except Exception as e:
             is_valid = False

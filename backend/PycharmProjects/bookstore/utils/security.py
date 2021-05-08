@@ -5,7 +5,6 @@ from utils.const import JWT_EXPIRATION_TIME_MINUTES, JWT_ALGORITHM, JWT_SECRET_K
 import jwt
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from starlette.status import HTTP_401_UNAUTHORIZED
 import time
 
 oauth_schema = OAuth2PasswordBearer(tokenUrl= "/v1/token")
