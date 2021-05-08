@@ -4,20 +4,16 @@ from models.book import Book
 from models.user import User
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from starlette.responses import Response
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from utils.security import authenticate_user, create_jwt_token, check_jwt_token
 from models.jwt_user import JWTUser
 
 app_v1 = FastAPI(openapi_prefix="/v1")
-oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
-
-@app_v1.get("/hello")
-async def hello_world():
-    return {"Hello fastapi world!"}
 
 @app_v1.post("/user", status_code=HTTP_201_CREATED)
-async def post_user(user: User, x_custom: str = Header("default header"),
-                    jwt: bool = Depends(check_jwt_token) ):
+async def post_user(user: User, x_custom: str = Header("default header")
+                    , jwt: bool = Depends(check_jwt_token)
+                    ):
     return {"request USER:": user, "request custom header": x_custom}
 
 @app_v1.get("/user")

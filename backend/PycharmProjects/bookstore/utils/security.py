@@ -8,7 +8,7 @@ from fastapi.security import OAuth2PasswordBearer
 from starlette.status import HTTP_401_UNAUTHORIZED
 import time
 
-oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
+oauth_schema = OAuth2PasswordBearer(tokenUrl= "/v1/token")
 
 pwd_context = CryptContext(schemes=["bcrypt"])
 jwt_user_fake_db = [{}]

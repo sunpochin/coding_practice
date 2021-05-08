@@ -14,7 +14,8 @@ app.mount("/v2", app_v2)
 async def middleware(request: Request, call_next):
     start_time = datetime.utcnow()
     # example 1. modify request
-    if not str(request.url).__contains__("/token"):
+    # if not str(request.url).__contains__("/token"):
+    if not any(word in str(request.url) for word in ["/token", "/docs", "/openapi.json"]):
         try:
             jwt_token = request.headers["Authori"].split("Bearer ")[1]
             is_valid = check_jwt_token(jwt_token)
