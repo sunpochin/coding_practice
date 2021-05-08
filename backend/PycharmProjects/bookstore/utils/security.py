@@ -7,7 +7,7 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 import time
 
-oauth_schema = OAuth2PasswordBearer(tokenUrl= "/v1/token")
+oauth_schema = OAuth2PasswordBearer(tokenUrl= "/token")
 
 pwd_context = CryptContext(schemes=["bcrypt"])
 jwt_user_fake_db = [{}]

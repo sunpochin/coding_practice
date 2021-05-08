@@ -1,14 +1,31 @@
-from fastapi import FastAPI, Body, Header, File, Request
+from fastapi import FastAPI, HTTPException, Depends
 from routes.v1 import app_v1
 from routes.v2 import app_v2
-from utils.security import check_jwt_token
+from starlette.requests import Request
 from starlette.responses import Response
-from starlette.status import HTTP_401_UNAUTHORIZED
 from datetime import datetime
 
+from fastapi.security import OAuth2PasswordRequestForm
+from utils.security import authenticate_user, create_jwt_token, check_jwt_token
+from models.jwt_user import JWTUser
+from starlette.status import HTTP_401_UNAUTHORIZED
+
 app = FastAPI()
-app.mount("/v1", app_v1)
-app.mount("/v2", app_v2)
+app.include_router(app_v1, prefix="/v1", dependencies=[Depends(check_jwt_token)])
+app.include_router(app_v2, prefix="/v2", dependencies=[Depends(check_jwt_token)])
+
+
+@app.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    jwt_user_dict = {"username": form_data.username,
+                     "password": form_data.password}
+    jwt_user = JWTUser(**jwt_user_dict)
+    user = authenticate_user(jwt_user)
+    if None is user:
+        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+    jwt_token = create_jwt_token(user)
+    return {"access_token": jwt_token}
+
 
 @app.middleware("http")
 async def middleware(request: Request, call_next):
