@@ -3,10 +3,11 @@ from models.jwt_user import JWTUser
 from datetime import datetime, timedelta
 from utils.const import JWT_EXPIRATION_TIME_MINUTES, JWT_ALGORITHM, JWT_SECRET_KEY
 import jwt
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 import time
 from utils.db_functions import db_check_token_user, db_check_jwt_username
+from starlette.status import HTTP_401_UNAUTHORIZED
 
 oauth_schema = OAuth2PasswordBearer(tokenUrl="/token")
 
@@ -81,10 +82,10 @@ async def check_jwt_token(token: str = Depends(oauth_schema)):
         #     if fake_jwt_user1.username == username:
         #         return final_checks(username, role)
     except Exception as e:
-        return False
-        # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
-    return False
-    # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+        # return False
+        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+    # return False
+    raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
     #     return HTTP_401_UNAUTHORIZED
     # return HTTP_401_UNAUTHORIZED
 
@@ -94,9 +95,9 @@ def final_checks(role: str):
     if role == "admin":
         return True
     else:
-        return False
-    # raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
-    pass
+        # return False
+        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+
 
 # print(get_hashed_password("mysecret"))
 # print(verify_password("mysecret", hashed) )

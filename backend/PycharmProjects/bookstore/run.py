@@ -10,10 +10,21 @@ from utils.security import authenticate_user, create_jwt_token, check_jwt_token
 from models.jwt_user import JWTUser
 from starlette.status import HTTP_401_UNAUTHORIZED
 from utils.const import TOKEN_DESCRIPTION, TOKEN_SUMMARY
+from utils.db_object import db
 
 app = FastAPI(title="Bookstore API documentation", description="It's a set of APIs used for books", version="1.0.0")
 app.include_router(app_v1, prefix="/v1", dependencies=[Depends(check_jwt_token)])
 app.include_router(app_v2, prefix="/v2", dependencies=[Depends(check_jwt_token)])
+
+
+@app.on_event("startup")
+async def connect_db():
+    await db.connect()
+
+
+@app.on_event("shutdown")
+async def disconnect_db():
+    await db.disconnect()
 
 
 @app.post("/token", description=TOKEN_DESCRIPTION, summary=TOKEN_SUMMARY)
@@ -33,19 +44,18 @@ async def middleware(request: Request, call_next):
     start_time = datetime.utcnow()
     # example 1. modify request
     # if not str(request.url).__contains__("/token"):
-    if not any(word in str(request.url) for word in ["/token", "/docs", "/openapi.json"]):
-        try:
-            jwt_token = request.headers["Authorization"].split("Bearer ")[1]
-            is_valid = check_jwt_token(jwt_token)
-        except Exception as e:
-            is_valid = False
-        if not is_valid:
-            return Response("Unau thorized", status_code=HTTP_401_UNAUTHORIZED)
-
+    # if not any(word in str(request.url) for word in ["/token", "/docs", "/openapi.json"]):
+    #     try:
+    #         jwt_token = request.headers["Authorization"].split("Bearer ")[1]
+    #         is_valid = check_jwt_token(jwt_token)
+    #     except Exception as e:
+    #         is_valid = False
+    #     if not is_valid:
+    #         return Response("Unau thorized", status_code=HTTP_401_UNAUTHORIZED)
+    #
     response = await call_next(request)
 
     # example 2. modify response
     excution_time = (datetime.utcnow() - start_time).microseconds
     response.headers["x-excution-time"] = str(excution_time)
     return response
-
