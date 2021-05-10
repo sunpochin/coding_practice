@@ -43,3 +43,23 @@ async def db_check_personel(username, password):
     else:
         return True
 
+
+async def db_check_fake(isbn):
+    query = """select * from book where isbn = :isbn"""
+    values = {"isbn": isbn}
+    result = await fetch(query, True, values)
+    return result
+
+
+async def db_get_book_with_isbn(isbn):
+    query = """select * from book where isbn = :isbn"""
+    values = {"isbn": isbn}
+    result = await fetch(query, True, values)
+    return result
+
+
+async def db_get_author(input_val):
+    query = """select * from authors where name = :name"""
+    values = {"name": input_val}
+    author = await fetch(query, True, values)
+    return author

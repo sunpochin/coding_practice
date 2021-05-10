@@ -5,8 +5,8 @@ from models.user import User
 from starlette.status import HTTP_201_CREATED
 from starlette.responses import Response
 from utils.security import check_jwt_token
-from utils.db_functions import db_insert_personel
-from utils.db_functions import db_check_personel
+from utils.db_functions import (db_insert_personel, db_check_personel,
+                                db_get_book_with_isbn, db_get_author, db_check_fake)
 # app_v1 = FastAPI(openapi_prefix="/v1")
 app_v1 = APIRouter()
 
@@ -22,27 +22,35 @@ async def post_user(user: User):
 
 
 @app_v1.post("/login", tags=["User"])
-async def get_user_validation(username:str=Body(...), password: str = Body(...)):
+async def get_user_validation(username: str = Body(...), password: str = Body(...)):
     result = await db_check_personel(username, password)
     return {"is_valid": result}
     # return {"QUERY parameter ": password}
 
 
-@app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name"], tags=["Book"])
+@app_v1.get("/book/{isbn}", response_model=Book,
+            response_model_include=["name", "year"], tags=["Book"])
 async def get_book_with_isbn(isbn: str):
-    author_dict = {
-        "name": "author1",
-        "book": ["book1", "book2"]
-    }
-    author1 = Author(**author_dict)
-    book_dict = {
-        "isbn": "isbn1",
-        "name": "book1",
-        "year": 2019,
-        "author": author1
-    }
-    book1 = Book(**book_dict)
-    return book1
+    book = await db_get_book_with_isbn(isbn)
+    author = await db_get_author(book["author"])
+    author_obj = Author(**author)
+    book["author"] = author_obj
+    book_result = Book(**book)
+    return book_result
+
+    # author_dict = {
+    #     "name": "author1",
+    #     "books": ["book1", "book2"]
+    # }
+    # author1 = Author(**author_dict)
+    # book_dict = {
+    #     "isbn": "isbn1",
+    #     "name": "book1",
+    #     "year": 2019,
+    #     "author": author1
+    # }
+    # book1 = Book(**book_dict)
+    # return book1
 
 # @app_v1.get("/book/{isbn}")
 # async def get_book_with_isbn(isbn: str):
