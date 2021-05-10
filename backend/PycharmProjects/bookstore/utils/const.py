@@ -8,3 +8,10 @@ TOKEN_SUMMARY = "It returns JWT token."
 
 ISBN_DESCRIPTION = "It is unique identifier for books."
 ISBN_SUMMARY = "ISBN summary."
+
+DB_HOST = "localhost"
+DB_USER = "admin"
+DB_PASSWORD = "admin"
+DB_NAME = "bookstore"
+
+DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
