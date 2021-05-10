@@ -9,7 +9,7 @@ TOKEN_SUMMARY = "It returns JWT token."
 ISBN_DESCRIPTION = "It is unique identifier for books."
 ISBN_SUMMARY = "ISBN summary."
 
-DB_HOST = "localhost"
+DB_HOST = "165.232.145.210"
 DB_USER = "admin"
 DB_PASSWORD = "admin"
 DB_NAME = "bookstore"

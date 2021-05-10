@@ -1,5 +1,5 @@
 import asyncio
-from orm_db import authors
+from utils.orm_db import authors
 from databases import Database
 from utils.const import *
 
@@ -28,14 +28,19 @@ async def fetch(query, is_one, values=None):
 
     if is_one:
         result = await db.fetch_one(query=query, values=values)
-        out = dict(result)
+        if result is None:
+            out = None
+        else:
+            out = dict(result)
     else:
         result = await db.fetch_all(query=query, values=values)
-        out = []
-        for row in result:
-            out.append(dict(row))
+        if result is None:
+            out = None
+        else:
+            out = []
+            for row in result:
+                out.append(dict(row))
     await disconnect_db(db)
-
     # print(out)
     return out
 
@@ -62,13 +67,15 @@ fetch_result = {"isbn": "isbn4"}
 
 
 async def test_orm():
-    # query = authors.insert().values(id=1, name="author1", books=["book1", "book2"])
-    # await execute(query, False)
+    query = authors.insert().values(id=1, name="author1", books=["book1", "book2"])
+    await execute(query, False)
+    query = authors.insert().values(id=2, name="author2", books=["book3", "book4"])
+    await execute(query, False)
 
     query = authors.select().where(authors.c.id == 2)
     # query = authors.select()
     out = await fetch(query, True)
     print(out)
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(test_orm())
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(test_orm())

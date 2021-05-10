@@ -21,10 +21,10 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     jwt_user_dict = {"username": form_data.username,
                      "password": form_data.password}
     jwt_user = JWTUser(**jwt_user_dict)
-    user = authenticate_user(jwt_user)
+    user = await authenticate_user(jwt_user)
     if None is user:
         raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
-    jwt_token = create_jwt_token(user)
+    jwt_token = await create_jwt_token(user)
     return {"access_token": jwt_token}
 
 
