@@ -20,4 +20,10 @@ create table authors (
 );
 
 
-
+create table personel (
+  id serial primary key,
+  username text,
+  password text,
+  mail text,
+  role text
+);

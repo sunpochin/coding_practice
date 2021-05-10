@@ -23,3 +23,10 @@ async def db_check_jwt_username(username: str):
         return False
     else:
         return True
+
+
+async def db_insert_personel(user):
+    query = """insert into personel(username, password, mail, role)
+            values(:name, :password, :mail, :role)"""
+    values = dict(user)
+    await execute(query, False, values)
