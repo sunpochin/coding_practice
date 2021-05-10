@@ -6,24 +6,26 @@ from starlette.status import HTTP_201_CREATED
 from starlette.responses import Response
 from utils.security import check_jwt_token
 from utils.db_functions import db_insert_personel
-
+from utils.db_functions import db_check_personel
 # app_v1 = FastAPI(openapi_prefix="/v1")
 app_v1 = APIRouter()
 
 
-@app_v1.post("/user", status_code=HTTP_201_CREATED, tags=["User"])
 # async def post_user(user: User, x_custom: str = Header("default header"),
 #                     # jwt: bool = Depends(check_jwt_token)
 #                     ):
+@app_v1.post("/user", status_code=HTTP_201_CREATED, tags=["User"])
 async def post_user(user: User):
     await db_insert_personel(user)
     return {"result": "personel created"}
     # return {"request USER:": user, "request custom header": x_custom}
 
 
-@app_v1.get("/user", tags=["User"])
-async def get_user_validation(password: str):
-    return {"QUERY parameter ": password}
+@app_v1.post("/login", tags=["User"])
+async def get_user_validation(username:str=Body(...), password: str = Body(...)):
+    result = await db_check_personel(username, password)
+    return {"is_valid": result}
+    # return {"QUERY parameter ": password}
 
 
 @app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name"], tags=["Book"])
