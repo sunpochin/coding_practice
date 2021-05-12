@@ -1,3 +1,45 @@
+create table authors
+(
+    id    serial not null
+        constraint authors_pkey
+            primary key,
+    name  text,
+    books text[]
+);
+
+create table book
+(
+    isbn   text not null
+        constraint books_pkey
+            primary key,
+    name   text,
+    author text,
+    year   integer
+);
+
+create table personel
+(
+    id       serial not null
+        constraint personel_pkey
+            primary key,
+    username text,
+    password text,
+    mail     text,
+    role     text
+);
+
+create table users
+(
+    id       serial not null
+        constraint users_pkey
+            primary key,
+    username text   not null,
+    password text   not null,
+    mail     text,
+    role     text
+);
+
+
 create table users (
   id serial primary key,
   username text not null,
@@ -27,3 +69,16 @@ create table personel (
   mail text,
   role text
 );
+
+### docker cmds
+###
+# real db
+docker run --name=bookstore-db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=bookstore -p 5432:5432 -d postgres:10
+# test db
+docker run --name=test-db -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test -e POSTGRES_DB=test -p 5432:5432 -d postgres:10
+
+# redis
+docker run --name my-redis -d -p 6379:6379 redis
+# test redis
+docker run --name test-redis -d -p 6379:6379 redis
+

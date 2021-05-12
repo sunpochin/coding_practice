@@ -13,10 +13,18 @@ DB_HOST = "159.65.130.128"
 DB_USER = "admin"
 DB_PASSWORD = "admin"
 DB_NAME = "bookstore"
-
 DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
 UPLOAD_PHOTO_APIKEY = "f1ad503081b5fa2ba2eeb51da238b96f"
 UPLOAD_PHOTO_URL = f"https://api.imgbb.com/1/upload?key={UPLOAD_PHOTO_APIKEY}"
 
 REDIS_URL = "redis://159.65.130.128"
+
+TESTING = True
+TEST_DB_HOST = "localhost"
+TEST_DB_USER = "test"
+TEST_DB_PASSWORD = "test"
+TEST_DB_NAME = "test"
+TEST_DB_URL = f"postgresql://{TEST_DB_USER}:{TEST_DB_PASSWORD}@{TEST_DB_HOST}/{TEST_DB_NAME}"
+
+TEST_REDIS_URL = "redis://localhost"

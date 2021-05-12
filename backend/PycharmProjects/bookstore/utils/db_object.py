@@ -1,4 +1,8 @@
 from databases import Database
-from utils.const import DB_URL
+from utils.const import *
 
-db = Database(DB_URL)
+if TESTING:
+    print("TEST_DB_URL: ", TEST_DB_URL)
+    db = Database(TEST_DB_URL)
+else:
+    db = Database(DB_URL)

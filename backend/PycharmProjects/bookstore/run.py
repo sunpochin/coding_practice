@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Depends
 from routes.v1 import app_v1
 from routes.v2 import app_v2
 from starlette.requests import Request
-from starlette.responses import Response
 from datetime import datetime
 
 from fastapi.security import OAuth2PasswordRequestForm
@@ -14,16 +13,20 @@ from utils.const import *
 from utils.db_object import db
 import utils.redis_object as re
 import aioredis
+from utils.redis_object import check_test_redis
 
 app = FastAPI(title="Bookstore API documentation", description="It's a set of APIs used for books", version="1.0.0")
-app.include_router(app_v1, prefix="/v1", dependencies=[Depends(check_jwt_token)])
-app.include_router(app_v2, prefix="/v2", dependencies=[Depends(check_jwt_token)])
+app.include_router(app_v1, prefix="/v1", dependencies=[Depends(check_jwt_token),
+                                                       Depends(check_test_redis)])
+app.include_router(app_v2, prefix="/v2", dependencies=[Depends(check_jwt_token),
+                                                       Depends(check_test_redis)])
 
 
 @app.on_event("startup")
 async def connect_db():
     await db.connect()
     re.redis = await aioredis.create_redis_pool(REDIS_URL)
+
 
 @app.on_event("shutdown")
 async def disconnect_db():
