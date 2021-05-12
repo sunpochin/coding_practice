@@ -10,6 +10,8 @@ from utils.db_functions import (db_insert_personel, db_check_personel,
                                 db_check_fake)
 from utils.db_functions import *
 from utils.helper_function import upload_image_to_server
+import utils.redis_object as re
+import pickle
 
 # app_v1 = FastAPI(openapi_prefix="/v1")
 app_v1 = APIRouter()
@@ -27,34 +29,40 @@ async def post_user(user: User):
 
 @app_v1.post("/login", tags=["User"])
 async def get_user_validation(username: str = Body(...), password: str = Body(...)):
-    result = await db_check_personel(username, password)
-    return {"is_valid": result}
-    # return {"QUERY parameter ": password}
+    redis_key = f"{username},{password}"
+    result = await re.redis.get(redis_key)
+    # redis has data,
+    if result:
+        if "true" == result:
+            return {"is_valid (redis)": True}
+        else:
+            return {"is_valid (redis)": False}
+    # redis does not have the data
+    else:
+        result = await db_check_personel(username, password)
+        print('redis set result: ', result)
+        await re.redis.set(redis_key, str(result), expire=2)
+        return {"is_valid (DB)": result}
 
 
-@app_v1.get("/book/{isbn}", response_model=Book,
-            response_model_include=["name", "year"], tags=["Book"])
+@app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name", "year"], tags=["Book"])
 async def get_book_with_isbn(isbn: str):
-    book = await db_get_book_with_isbn(isbn)
-    author = await db_get_author(book["author"])
-    author_obj = Author(**author)
-    book["author"] = author_obj
-    book_result = Book(**book)
-    return book_result
+    result = await re.redis.get(isbn)
+    if result:
+        result_book = pickle.loads(result)
+        # result_book = Book(**result)
+        print('load redis pickle')
+        return result_book
+    else:
+        book = await db_get_book_with_isbn(isbn)
+        author = await db_get_author(book["author"])
+        author_obj = Author(**author)
+        book["author"] = author_obj
+        result_book = Book(**book)
 
-    # author_dict = {
-    #     "name": "author1",
-    #     "books": ["book1", "book2"]
-    # }
-    # author1 = Author(**author_dict)
-    # book_dict = {
-    #     "isbn": "isbn1",
-    #     "name": "book1",
-    #     "year": 2019,
-    #     "author": author1
-    # }
-    # book1 = Book(**book_dict)
-    # return book1
+        await re.redis.set(isbn, pickle.dumps(result_book), expire=5)
+        print('set redis:')
+        return result_book
 
 
 @app_v1.get("/author/{id}/book", tags=["Book"])
