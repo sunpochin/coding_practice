@@ -15,3 +15,6 @@ DB_PASSWORD = "admin"
 DB_NAME = "bookstore"
 
 DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+
+UPLOAD_PHOTO_APIKEY = "f1ad503081b5fa2ba2eeb51da238b96f"
+UPLOAD_PHOTO_URL = f"https://api.imgbb.com/1/upload?key={UPLOAD_PHOTO_APIKEY}"

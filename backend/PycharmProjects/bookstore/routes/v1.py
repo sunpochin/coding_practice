@@ -6,7 +6,11 @@ from starlette.status import HTTP_201_CREATED
 from starlette.responses import Response
 from utils.security import check_jwt_token
 from utils.db_functions import (db_insert_personel, db_check_personel,
-                                db_get_book_with_isbn, db_get_author, db_check_fake)
+                                db_get_book_with_isbn, db_get_author, db_get_author_from_id,
+                                db_check_fake)
+from utils.db_functions import *
+from utils.helper_function import upload_image_to_server
+
 # app_v1 = FastAPI(openapi_prefix="/v1")
 app_v1 = APIRouter()
 
@@ -52,19 +56,27 @@ async def get_book_with_isbn(isbn: str):
     # book1 = Book(**book_dict)
     # return book1
 
-# @app_v1.get("/book/{isbn}")
-# async def get_book_with_isbn(isbn: str):
-#     return {"Query CHANGABLE parameter ": isbn}
-
 
 @app_v1.get("/author/{id}/book", tags=["Book"])
-async def get_authors_books(id: int, category: str, order: str = "asc"):
-    return {"Both pass and query parameter ": order + category + str(id)}
+async def get_authors_books(id: int, order: str = "asc"):
+    author = await db_get_author_from_id(id)
+    if author is not None:
+        books = author["books"]
+        if "asc" == order:
+            books = sorted(books)
+        else:
+            books = sorted(books, reverse=True)
+        return {"Author books": books}
+    else:
+        return {"result": "no author with id."}
+
+    # return {"Both pass and query parameter ": order + category + str(id)}
 
 
-@app_v1.patch("/author/name")
-async def patch_author_name(name: str = Body(..., embed=True)):
-    return {"name in body": name}
+@app_v1.patch("/author/{id}/name")
+async def patch_author_name(id: int, name: str = Body(..., embed=True)):
+    await db_patch_author_name(id, name)
+    return {"result": "name updated"}
 
 
 @app_v1.post("/user/author")
@@ -75,6 +87,7 @@ async def post_user_and_author(user: User, author: Author, bookstore_name: str =
 # multi-form request
 @app_v1.post("/user/photo")
 async def upload_user_photo(response: Response, profile_photo: bytes = File(...)):
-    response.headers["x-file-size"] = str(len(profile_photo))
-    response.set_cookie(key="cookie-api", value="test")
+    # response.headers["x-file-size"] = str(len(profile_photo))
+    # response.set_cookie(key="cookie-api", value="test")
+    await upload_image_to_server(profile_photo)
     return {"file size": len(profile_photo)}

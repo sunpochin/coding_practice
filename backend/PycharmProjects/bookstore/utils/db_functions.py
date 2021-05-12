@@ -63,3 +63,17 @@ async def db_get_author(input_val):
     values = {"name": input_val}
     author = await fetch(query, True, values)
     return author
+
+
+async def db_get_author_from_id(input_val):
+    query = """select * from authors where id=:id"""
+    values = {"id": input_val}
+    result = await fetch(query, True, values)
+    return result
+
+
+async def db_patch_author_name(id, name):
+    query = """update authors set name=:name where id=:id"""
+    values = {"id": id, "name": name}
+    await execute(query, False, values)
+
