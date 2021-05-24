@@ -53,7 +53,8 @@ app.get("/compose", function(req, res) {
 app.post("/compose", function(req, res) {
   var jsonPost = {
     title: req.body.inputTitle,
-    content: req.body.inputContent
+    content: req.body.inputContent,
+    titleLodash: _.lowerCase(req.body.inputTitle)
   };
   allPosts.push(jsonPost);
   res.redirect("/");
@@ -62,10 +63,8 @@ app.post("/compose", function(req, res) {
 
 app.get("/posts/:postid", function(req, res) {
   let postId = req.params.postid;
-  // console.log("postid: ", req.params.postid);
-  // res.send("postid: " + req.params.postid)
   for (let it = 0; it < allPosts.length; it++) {
-    console.log("lodash: ", _.lowerCase(allPosts[it].title))
+    console.log("lodash: ", _.lowerCase(allPosts[it].titleLodash))
     if ( _.lowerCase(allPosts[it].title) === _.lowerCase(postId) ) {
       console.log("Match found! ")
       res.render("post", {post: allPosts[it]})
