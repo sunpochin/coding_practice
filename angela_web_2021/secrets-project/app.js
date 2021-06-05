@@ -136,6 +136,24 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
+
+app.get("/submit", function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render("submit");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/submit", function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render("submit");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+
 app.get("/register", function(req, res) {
   res.render("register");
 });

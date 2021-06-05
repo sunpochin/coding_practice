@@ -1,44 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var hike = require('./routes/hike');
+//jshint esversion:6
+// app.js
+require('dotenv').config();
+const routes = require('./api/books');
+const cors = require('cors');
 
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const connectDB = require('./config/db');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+app.use(cors({ origin: true, credentials: true }));
 
-var app = express();
-app.get('/hikes', hike.index);
-app.post('/add_hike', hike.add_hike);
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(express.static("public"));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+// Connect Database
+connectDB();
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/api/books", books);
+// app.use('/api', routes);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+app.get('/', (req, res) => res.send('Hello world!'));
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+const port = process.env.PORT || 8082;
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+app.listen(port, () => console.log(`Server running on port ${port}`));
