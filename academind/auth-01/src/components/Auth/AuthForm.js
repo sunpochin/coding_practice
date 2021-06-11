@@ -63,7 +63,8 @@ const AuthForm = () => {
         console.log(" test aa: ", aa.email);
         console.log(" test aa: ", aa.idToken);
         // alert('aa.idToken: ' + aa.email);
-				authCtx.login(aa.idToken);
+				const expireTime = new Date(new Date().getTime() + (+aa.expiresIn * 1000));
+				authCtx.login(aa.idToken, expireTime.toISOString() );
 				history.replace('/');
 
       })
