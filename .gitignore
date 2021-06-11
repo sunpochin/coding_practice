@@ -48,6 +48,7 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+node_modules/
 
 # https://stackoverflow.com/questions/3719243/best-practices-for-adding-gitignore-file-for-python-projects
 
