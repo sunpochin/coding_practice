@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
 		next();
 	} catch (err) {
 		console.log("check-auth: ", err);
-		const error = new HttpError("Auth Failed.", 401);
+		const error = new HttpError("Auth Failed.", 403);
 		return next(error);
 	}
 };
