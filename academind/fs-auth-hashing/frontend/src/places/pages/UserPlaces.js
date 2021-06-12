@@ -19,7 +19,9 @@ const UserPlaces = () => {
           `http://localhost:5000/api/places/user/${userId}`
         );
         setLoadedPlaces(responseData.places);
-      } catch (err) {}
+      } catch (err) {
+        console.log('UserPlaces err: ', err);
+      }
     };
     fetchPlaces();
   }, [sendRequest, userId]);

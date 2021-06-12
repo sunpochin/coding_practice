@@ -80,8 +80,11 @@ const Auth = () => {
             'Content-Type': 'application/json'
           }
         );
-        auth.login(responseData.user.id);
-      } catch (err) {}
+        console.log('response: ', responseData);
+        auth.login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('err', err);
+      }
     } else {
       try {
         const formData = new FormData();
@@ -94,9 +97,11 @@ const Auth = () => {
           'POST',
           formData
         );
+        auth.login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('err', err);
 
-        auth.login(responseData.user.id);
-      } catch (err) {}
+      }
     }
   };
 
