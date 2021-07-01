@@ -1,3 +1,4 @@
+//jshint esversion: 6
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -106,7 +107,7 @@ const login = async (req, res, next) => {
 		existingUser = await User.findOne({ email: email });
 	} catch (err) {
 		const error = new HttpError(
-			"Loggin in failed, please try again later.",
+			"Loggin in failed, please try again later. " + err,
 			500
 		);
 		return next(error);

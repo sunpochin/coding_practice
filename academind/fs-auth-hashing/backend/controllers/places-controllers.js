@@ -1,3 +1,4 @@
+//jshint esversion:6
 const fs = require("fs");
 
 const { validationResult } = require("express-validator");
@@ -36,16 +37,18 @@ const getPlaceById = async (req, res, next) => {
 const getPlacesByUserId = async (req, res, next) => {
 	const userId = req.params.uid;
 
+	console.log('userId: ', userId);
 	// let places;
 	let userWithPlaces;
 	try {
 		userWithPlaces = await User.findById(userId).populate("places");
 	} catch (err) {
 		const error = new HttpError(
-			"Fetching places failed, please try again later.",
+			"Fetching places failed, please try again later." + err,
 			500
 		);
-		return next(error);
+		console.log('error: ', error);
+		// return next(error);
 	}
 
 	// if (!places || places.length === 0) {
@@ -70,7 +73,7 @@ const createPlace = async (req, res, next) => {
 		);
 	}
 
-	const { title, description, address, creator } = req.body;
+	const { title, description, address} = req.body;
 
 	// let coordinates;
 	// try {
@@ -85,12 +88,12 @@ const createPlace = async (req, res, next) => {
 		address,
 		location: { lat: 0.0, lng: 0.0 },
 		image: req.file.path,
-		creator,
+		creator: req.userData.userId
 	});
 
 	let user;
 	try {
-		user = await User.findById(creator);
+		user = await User.findById(req.userData.userId);
 	} catch (err) {
 		console.log("err: ", err);
 		const error = new HttpError(

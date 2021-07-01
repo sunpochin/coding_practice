@@ -1,3 +1,5 @@
+//jshint esversion:6
+
 const express = require('express');
 const { check } = require('express-validator');
 
@@ -7,7 +9,7 @@ const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 
 router.get('/:pid', placesControllers.getPlaceById);
-
+// We are supposed to see any place of any user, so Don't need to use uid from token here. If we use uid from token, we would only be able to see user's own place.
 router.get('/user/:uid', placesControllers.getPlacesByUserId);
 
 router.use(checkAuth);
