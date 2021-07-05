@@ -3,17 +3,28 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import Board from './Board'
+import { observe } from './Game'
 
-import Knight from "./Knight";
-import Square from "./Square";
+const root = document.getElementById('root')
+
+observe((knightPosition) =>
+  ReactDOM.render(<Board knightPosition={knightPosition} />, root)
+)
+
+// ReactDOM.render(
+// 	// <Square black>
+// 	// 	<Knight />
+// 	// </Square>,
+//   <Board knightPosition={[4, 5]} />,
+// 	document.getElementById("root")
+// );
 
 
-ReactDOM.render(
-	<Square black>
-		<Knight />
-	</Square>,
-	document.getElementById("root")
-);
+// ReactDOM.render(
+//   <Board knightPosition={[7, 4]} />,
+//   document.getElementById('root')
+// )
 
 // ReactDOM.render(
 //   <React.StrictMode>
